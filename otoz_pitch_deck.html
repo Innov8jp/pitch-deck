@@ -1,1 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otoz.ai Pitch Deck</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Montserrat', 'Segoe UI', 'Open Sans', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #0b1a29; /* Deep dark blue, primary background */
+            color: #ffffff; /* Default text color */
+            overflow: hidden; /* Hide scrollbars, good for presentation mode */
+        }
 
+        /* Slide Container - Defines the full viewport for each slide */
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: #0b1a29; /* Ensure consistent background for all slides */
+            position: relative;
+            overflow: hidden; /* Contain elements within the slide */
+            /* Add these for simple slide switching later if desired */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slide-container.active {
+            opacity: 1;
+            pointer-events: auto;
+            position: relative; /* Only active slide takes up space in flow if not fixed */
+        }
+
+        /* Header - Consistent with Slide 1 (Logo on top right) */
+        .slide-header {
+            display: flex;
+            justify-content: flex-end; /* Align content to the right */
+            align-items: center;
+            padding: 25px 60px; /* Generous padding */
+            z-index: 10;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .logo-section img {
+            height: 35px; /* Adjust as needed for logo size */
+        }
+        
+        /* Main Content Area - Defaulting to centered layout */
+        .slide-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
+            padding: 0 80px; /* Wider content area */
+            position: relative;
+            z-index: 5;
+            text-align: center; /* Default text alignment */
+        }
+
+        /* Footer - Consistent across all slides */
+        .slide-footer {
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
+            z-index: 10;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900; /* Extra bold for impact */
+            line-height: 1.2;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        h1 { font-size: 3.8rem; }
+        h2 { font-size: 3rem; }
+        h3 { font-size: 2.2rem; }
+        p {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #e2e8f0; /* Off-white for body text */
+        }
+
+        /* Utility Classes for consistent styling and branding */
+        .gradient-text {
+            background: linear-gradient(135deg, #22d3ee, #667eea); /* Aqua to Purple */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block; /* Ensure gradient applies correctly */
+        }
+
+        .highlight-yellow { color: #fbbf24; font-weight: 700; }
+        .highlight-aqua { color: #22d3ee; font-weight: 700; }
+        .highlight-green { color: #059669; font-weight: 700; }
+        .highlight-purple { color: #8b5cf6; font-weight: 700; }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08); /* Semi-transparent background */
+            backdrop-filter: blur(15px); /* Frosted glass effect */
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animation Keyframes */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+        @keyframes fadeInScaleUp {
+            from { opacity: 0; transform: translateY(20px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        @keyframes slideInFromLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInFromRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Specific styles for the interactive agent cards power display (from prior discussion) */
+        .interactive-agent-card {
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 25px; padding: 25px 20px; text-align: center; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: visible;
+        }
+        .interactive-agent-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(34, 211, 238, 0.4);
+            border-color: #22d3ee; /* Highlight border on hover */
+        }
+        .interactive-agent-card .shimmer-effect {
+            position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.6s; pointer-events: none; border-radius: 25px;
+        }
+        .interactive-agent-card:hover .shimmer-effect {
+            left: 100%;
+        }
+
+        .power-item {
+            background: linear-gradient(135deg, #1e3a8a, #0f172a); /* Dark blue gradient */
+            color: #a7f3d0; /* Light green text */
+            padding: 15px 25px;
+            border-radius: 30px; /* Pill shape */
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 10px; /* Space between powers */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0; /* Start hidden */
+            transform: translateY(20px) scale(0.9); /* Start slightly below and smaller */
+            animation: fadeInScaleUp 0.6s ease-out forwards; /* Animation when they appear */
+            border: 2px solid #34d399; /* Light green border */
+            position: relative; /* For the glow effect */
+            overflow: hidden; /* For shimmer inside power item */
+        }
+
+        .power-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(167, 243, 208, 0.2) 0%, transparent 70%);
+            animation: powerGlow 2s infinite alternate;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .power-item:hover::before {
+            opacity: 1;
+        }
+        @keyframes powerGlow {
+            0% { transform: scale(0.8) rotate(0deg); opacity: 0.5; }
+            100% { transform: scale(1.2) rotate(360deg); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide-container active" data-slide="1" style="background-image: url('Top Slide.jpg'); background-size: cover; background-position: center; position: relative;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(to bottom right, rgba(11, 26, 41, 0.8), rgba(2, 106, 126, 0.6)); z-index: 1;"></div>
+        
+        <div class="slide-header">
+            <div class="logo-section">
+                <img src="otoz logo.png" alt="Otoz.ai Logo">
+            </div>
+        </div>
+
+        <div class="slide-content" style="text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 100px; z-index: 2;">
+            <h1 style="color: #ffffff; margin-bottom: 15px; animation: fadeInScaleUp 1s ease-out;">
+                <span class="gradient-text">Crossborder Automobile</span> Marketplace
+            </h1>
+            <p style="font-size: 1.8rem; color: #e2e8f0; margin-bottom: 50px; font-weight: 600; animation: fadeInScaleUp 1.2s ease-out;">
+                Revolutionizing Global Car Trade with AI
+            </p>
+            <div style="width: 150px; height: 4px; background: linear-gradient(90deg, #22d3ee, #667eea); border-radius: 2px; margin-bottom: 30px; animation: fadeInScaleUp 1.4s ease-out;"></div>
+            <p style="font-size: 1.3rem; color: #ffffff; font-weight: 600; margin-bottom: 5px; animation: fadeInScaleUp 1.6s ease-out;">
+                Mirza Asif Baig
+            </p>
+            <p style="font-size: 1rem; color: #94a3b8; animation: fadeInScaleUp 1.8s ease-out;">
+                Founder & CEO
+            </p>
+        </div>
+
+        <div class="slide-footer">
+            ©2025 Otoz.ai INC. All rights reserved
+        </div>
+    </div>
+
+    <div class="slide-container" data-slide="2">
+        <div class="slide-header">
+            <div class="logo-section">
+                <img src="otoz logo.png" alt="Otoz.ai Logo">
+            </div>
+        </div>
+
+        <div class="slide-content">
+            <h2 style="font-size: 3.5rem; color: #ffffff; animation: slideInFromLeft 0.8s ease-out; max-width: 1000px; text-align: center;">
+                <span class="gradient-text">Otoz.ai:</span> Your Global Gateway to Seamless Car Trade
+            </h2>
+            <p style="font-size: 1.5rem; color: #e2e8f0; margin-bottom: 40px; max-width: 900px; animation: slideInFromLeft 1s ease-out; text-align: center;">
+                We are <span class="highlight-green">live today</span> and seeing early volume of car sales, proving our vision for a connected automotive future.
+            </p>
+            
+            <div class="card" style="padding: 40px 60px; max-width: 900px; text-align: center; animation: popIn 1.2s ease-out;">
+                <p style="font-size: 1.3rem; margin: 0; color: #ffffff; line-height: 1.6;">
+                    With <span class="highlight-yellow">17 years of experience</span> in vehicle export from Japan to <span class="highlight-aqua">more than 20 countries</span> using traditional methods,
+                    we were intrigued to <span class="gradient-text">fill the technology gap</span> in this massive industry.
+                </p>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            ©2025 Otoz.ai INC. All rights reserved
+        </div>
+    </div>
+
+    <div class="slide-container" data-slide="3">
+        <div class="slide-header">
+            <div class="logo-section">
+                <img src="otoz logo.png" alt="Otoz.ai Logo">
+            </div>
+        </div>
+
+        <div class="slide-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 100px;">
+            <h2 style="color: #ffffff; margin-bottom: 50px; animation: fadeInScaleUp 0.8s ease-out; text-align: center; max-width: 900px;">
+                <span class="gradient-text">Global Used Car</span> Market Insights
+            </h2>
+
+            <div style="display: flex; gap: 60px; width: 100%; max-width: 1200px; justify-content: center;">
+                <div style="flex: 1; animation: slideInFromLeft 0.8s ease-out; text-align: center;">
+                    <div class="card" style="padding: 30px; margin-bottom: 30px;">
+                        <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: #22d3ee; text-align: center;">Top Global Exporters (2022)</h3>
+                        <ul style="list-style: none; padding: 0; margin: 0; text-align: left; max-width: 300px; margin: 0 auto;">
+                            <li style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 10px;"><span class="highlight-yellow">1. Japan</span></li>
+                            <li style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 10px;">2. United States</li>
+                            <li style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 10px;">3. Germany</li>
+                            <li style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 10px;">4. United Kingdom</li>
+                            <li style="font-size: 1.2rem; color: #e2e8f0;">5. Canada</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; animation: slideInFromRight 0.8s ease-out;">
+                    <div style="width: 220px; height: 220px; background: linear-gradient(135deg, #8b5cf6, #667eea); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 40px rgba(139, 92, 246, 0.6); margin-bottom: 40px; animation: popIn 1s ease-out;">
+                        <p style="font-size: 1.5rem; color: #e2e8f0; margin-bottom: 5px;">Global Market</p>
+                        <span style="font-size: 4rem; font-weight: 900; color: #ffffff;">$2T</span>
+                    </div>
+
+                    <div class="card" style="padding: 25px 30px; max-width: 500px; animation: popIn 1.4s ease-out;">
+                        <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: #fbbf24;">Top 5 Export Destinations from Japan [2024]:</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <p style="font-size: 1.1rem; margin: 0; text-align: left;"><span class="highlight-aqua">1. UAE:</span> 226,762 units</p>
+                            <p style="font-size: 1.1rem; margin: 0; text-align: left;"><span class="highlight-aqua">2. RUSSIA:</span> 199,098 units</p>
+                            <p style="font-size: 1.1rem; margin: 0; text-align: left;"><span class="highlight-aqua">3. MONGOLIA:</span> 111,661 units</p>
+                            <p style="font-size: 1.1rem; margin: 0; text-align: left;"><span class="highlight-aqua">4. NEW ZEALAND:</span> 71,667 units</p>
+                            <p style="font-size: 1.1rem; margin: 0; text-align: left;"><span class="highlight-aqua">5. TANZANIA:</span> 77,992 units</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            ©2025 Otoz.ai INC. All rights reserved
+        </div>
+    </div>
+
+    <div class="slide-container" data-slide="4">
+        <div class="slide-header">
+            <div class="logo-section">
+                <img src="otoz logo.png" alt="Otoz.ai Logo">
+            </div>
+        </div>
+
+        <div class="slide-content" style="display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 50px;">
+            <h2 style="color: #ffffff; margin-bottom: 50px; animation: fadeInScaleUp 0.8s ease-out;">
+                <span class="gradient-text">How People Import Cars Today:</span> A Complex Journey
+            </h2>
+
+            <div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; width: 90%; max-width: 1400px; margin-bottom: 40px;">
+                <div style="display: flex; flex-direction: column; align-items: center; flex: 1; animation: popIn 0.8s ease-out;">
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 50%; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                        <img src="https://via.placeholder.com/60/059669/ffffff?text=👨‍💻" alt="Seller Icon" style="filter: drop-shadow(0 0 5px rgba(5,150,105,0.5));">
+                    </div>
+                    <h4 style="font-size: 1.4rem; color: #059669; margin-bottom: 5px;">Seller</h4>
+                    <p style="font-size: 0.95rem; color: #e2e8f0; margin: 0;">UC dealer (Japan)</p>
+                </div>
+                
+                <div style="display: flex; align-items: center; justify-content: center; flex-basis: 50px;">
+                    <span style="font-size: 2.5rem; color: #22d3ee; animation: pulse 2s infinite;">→</span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; align-items: center; flex: 3; animation: popIn 1s ease-out;">
+                    <div style="display: flex; justify-content: space-around; width: 100%; margin-bottom: 15px;">
+                        <div style="text-align: center; flex: 1;">
+                            <div style="background: rgba(255,255,255,0.1); border-radius: 50%; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; margin: 0 auto 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                                <img src="https://via.placeholder.com/50/fbbf24/ffffff?text=🏛️" alt="Auction Icon" style="filter: drop-shadow(0 0 5px rgba(251,191,36,0.5));">
+                            </div>
+                            <p style="font-size: 0.9rem; color: #e2e8f0; margin: 0;">Auction Agent</p>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: center; flex-basis: 30px;"><span style="font-size: 2rem; color: #22d3ee;">→</span></div>
+                        <div style="text-align: center; flex: 1;">
+                            <div style="background: rgba(255,255,255,0.1); border-radius: 50%; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; margin: 0 auto 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                                <img src="https://via.placeholder.com/50/8b5cf6/ffffff?text=🚚" alt="Transporter Icon" style="filter: drop-shadow(0 0 5px rgba(139,92,246,0.5));">
+                            </div>
+                            <p style="font-size: 0.9rem; color: #e2e8f0; margin: 0;">Inland Transporter</p>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: center; flex-basis: 30px;"><span style="font-size: 2rem; color: #22d3ee;">→</span></div>
+                        <div style="text-align: center; flex: 1;">
+                            <div style="background: rgba(255,255,255,0.1); border-radius: 50%; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; margin: 0 auto 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                                <img src="https://via.placeholder.com/50/22d3ee/ffffff?text=👨‍⚖️" alt="Auction Icon" style="filter: drop-shadow(0 0 5px rgba(34,211,238,0.5));">
+                            </div>
+                            <p style="font-size: 0.9rem; color: #e2e8f0; margin: 0;">Auction</p>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: center; flex-basis: 30px;"><span style="font-size: 2rem; color: #22d3ee;">→</span></div>
+                        <div style="text-align: center; flex: 1;">
+                            <div style="background: rgba(255,255,255,0.1); border-radius: 50%; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; margin: 0 auto 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                                <img src="https://via.placeholder.com/50/059669/ffffff?text=🚢" alt="Exporter Icon" style="filter: drop-shadow(0 0 5px rgba(5,150,105,0.5));">
+                            </div>
+                            <p style="font-size: 0.9rem; color: #e2e8f0; margin: 0;">Exporter</p>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: center; flex-basis: 30px;"><span style="font-size: 2rem; color: #22d3ee;">→</span></div>
+                        <div style="text-align: center; flex: 1;">
+                            <div style="background: rgba(255,255,255,0.1); border-radius: 50%; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; margin: 0 auto 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                                <img src="https://via.placeholder.com/50/fbbf24/ffffff?text=📄" alt="Importer Icon" style="filter: drop-shadow(0 0 5px rgba(251,191,36,0.5));">
+                            </div>
+                            <p style="font-size: 0.9rem; color: #e2e8f0; margin: 0;">Importer</p>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #94a3b8; margin-top: 10px;">(Documents + Car move through these stages)</p>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: center; flex-basis: 50px;">
+                    <span style="font-size: 2.5rem; color: #22d3ee; animation: pulse 2s infinite;">→</span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; align-items: center; flex: 1; animation: popIn 1.2s ease-out;">
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 50%; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                        <img src="https://via.placeholder.com/60/8b5cf6/ffffff?text=🧑‍🤝‍🧑" alt="Buyer Icon" style="filter: drop-shadow(0 0 5px rgba(139,92,246,0.5));">
+                    </div>
+                    <h4 style="font-size: 1.4rem; color: #8b5cf6; margin-bottom: 5px;">Buyer</h4>
+                    <p style="font-size: 0.95rem; color: #e2e8f0; margin: 0;">End user (Global)</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px; display: flex; flex-direction: column; align-items: center; animation: popIn 1.4s ease-out; max-width: 900px;">
+                <p style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 20px;">The process involves significant deductions:</p>
+                <div style="display: flex; align-items: center; gap: 40px;">
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div style="background: linear-gradient(135deg, #fbbf24, #f59e0b); padding: 20px 30px; border-radius: 15px; box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);">
+                            <span style="font-size: 2.5rem; font-weight: 900; color: #0b1a29;">60%</span>
+                        </div>
+                        <p style="font-size: 1rem; color: #e2e8f0; margin-top: 10px;">After deductions</p>
+                    </div>
+                    <span style="font-size: 3rem; color: #94a3b8;">=</span>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div style="background: linear-gradient(135deg, #22d3ee, #0891b2); padding: 20px 30px; border-radius: 15px; box-shadow: 0 8px 20px rgba(34, 211, 238, 0.4);">
+                            <span style="font-size: 2.5rem; font-weight: 900; color: #0b1a29;">40%</span>
+                        </div>
+                        <p style="font-size: 1.0rem; color: #e2e8f0; margin-top: 10px;">Agency Fee</p>
+                    </div>
+                    <span style="font-size: 3rem; color: #94a3b8;">–</span>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div style="background: linear-gradient(135deg, #667eea, #8b5cf6); padding: 20px 30px; border-radius: 15px; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);">
+                            <span style="font-size: 2.5rem; font-weight: 900; color: #0b1a29;">100%</span>
+                        </div>
+                        <p style="font-size: 1.0rem; color: #e2e8f0; margin-top: 10px;">Payment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            ©2025 Otoz.ai INC. All rights reserved
+        </div>
+    </div>
+
+    <div class="slide-container" data-slide="5">
+        <div class="slide-header">
+            <div class="logo-section">
+                <img src="otoz logo.png" alt="Otoz.ai Logo">
+            </div>
+        </div>
+
+        <div class="slide-content">
+            <h2 style="color: #ffffff; margin-bottom: 20px; animation: fadeInScaleUp 0.8s ease-out; text-align: center; max-width: 900px;">
+                <span class="gradient-text">The Problem:</span> Inefficient Processes & Hidden Costs
+            </h2>
+            <p style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 50px; text-align: center; max-width: 900px; animation: fadeInScaleUp 1s ease-out;">
+                The used car industry has not leveraged data and AI, leading to significant inefficiencies and financial burdens.
+            </p>
+
+            <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 60px; width: 100%; max-width: 1200px;">
+                <div class="card" style="flex: 1; text-align: center; background: linear-gradient(135deg, #d97706, #f59e0b); border-color: rgba(251, 191, 36, 0.3); animation: slideInFromLeft 1s ease-out; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <h3 style="font-size: 1.8rem; color: #0b1a29; margin-bottom: 15px;">Manual Processes</h3>
+                    <p style="font-size: 1.1rem; color: #e2e8f0; margin-bottom: 10px;">
+                        <span class="highlight-yellow">18 hrs of admin work</span> is needed to export one unit.
+                    </p>
+                </div>
+                <div class="card" style="flex: 1; text-align: center; background: linear-gradient(135deg, #0e7490, #0891b2); border-color: rgba(34, 211, 238, 0.3); animation: popIn 1.2s ease-out; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <h3 style="font-size: 1.8rem; color: #0b1a29; margin-bottom: 15px;">Multiple Agents</h3>
+                    <p style="font-size: 1.1rem; color: #e2e8f0; margin-bottom: 10px;">
+                        Intermediaries take <span class="highlight-aqua">40% on top of the unit price</span>.
+                    </p>
+                </div>
+                <div class="card" style="flex: 1; text-align: center; background: linear-gradient(135deg, #065f46, #047857); border-color: rgba(5, 150, 105, 0.3); animation: slideInFromRight 1s ease-out; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <h3 style="font-size: 1.8rem; color: #0b1a29; margin-bottom: 15px;">Unpredictable</h3>
+                    <p style="font-size: 1.1rem; color: #e2e8f0; margin-bottom: 10px;">
+                        Indirect transactions and unpredictability <span class="highlight-green">tolling 50% business growth</span> of sellers.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card" style="padding: 30px 40px; background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); animation: popIn 1.4s ease-out;">
+                <p style="font-size: 1.3rem; color: #ffffff; margin: 0;">
+                    <span class="highlight-purple">Who is getting affected?</span> Approx. <span class="highlight-yellow">4 million buyers and sellers</span> of Japanese cars alone.
+                </p>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            ©2025 Otoz.ai INC. All rights reserved
+        </div>
+    </div>
+
+    <div class="slide-container" data-slide="6">
+        <div class="slide-header">
+            <div class="logo-section">
+                <img src="otoz logo.png" alt="Otoz.ai Logo">
+            </div>
+        </div>
+
+        <div class="slide-content">
+            <h2 style="color: #ffffff; margin-bottom: 50px; animation: fadeInScaleUp 0.8s ease-out; text-align: center; max-width: 900px;">
+                <span class="gradient-text">The Otoz.ai Solution:</span> Driving Profitability & Efficiency
+            </h2>
+            <p style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 60px; text-align: center; max-width: 900px; animation: fadeInScaleUp 1s ease-out;">
+                Otoz is leveraging data & AI to enhance profitability and efficiency of your business.
+            </p>
+
+            <div style="display: flex; justify-content: center; gap: 40px; width: 100%; max-width: 1200px;">
+                <div class="card" style="flex: 1; text-align: center; animation: slideInFromLeft 1s ease-out; display: flex; flex-direction: column; align-items: center;">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #d97706, #f59e0b); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px; box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);">
+                        <img src="https://via.placeholder.com/60/0b1a29/ffffff?text=💻" alt="Digitization Icon">
+                    </div>
+                    <h3 style="font-size: 1.8rem; color: #fbbf24; margin-bottom: 15px;">Digitization</h3>
+                    <p style="font-size: 1.1rem; color: #e2e8f0; margin-bottom: 10px;">
+                        Reduce <span class="highlight-yellow">18 hrs admin work to 30min</span>, error free transaction and availability of data, huge impact on environment.
+                    </p>
+                </div>
+
+                <div class="card" style="flex: 1; text-align: center; animation: popIn 1.2s ease-out; display: flex; flex-direction: column; align-items: center;">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #0e7490, #0891b2); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px; box-shadow: 0 0 30px rgba(34, 211, 238, 0.4);">
+                        <img src="https://via.placeholder.com/60/0b1a29/ffffff?text=gavel" alt="Smart Auction Icon">
+                    </div>
+                    <h3 style="font-size: 1.8rem; color: #22d3ee; margin-bottom: 15px;">Smart Auction</h3>
+                    <p style="font-size: 1.1rem; color: #e2e8f0; margin-bottom: 10px;">
+                        <span class="highlight-aqua">Seller:</span> direct access to qualified buyers, Sale increases <span class="highlight-aqua">20-30%</span>.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #e2e8f0; margin-bottom: 0;">
+                        <span class="highlight-aqua">Buyer:</span> empowering buyers to make well-informed decisions.
+                    </p>
+                </div>
+
+                <div class="card" style="flex: 1; text-align: center; animation: slideInFromRight 1s ease-out; display: flex; flex-direction: column; align-items: center;">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #065f46, #047857); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px; box-shadow: 0 0 30px rgba(5, 150, 105, 0.4);">
+                        <img src="https://via.placeholder.com/60/0b1a29/ffffff?text=🤖" alt="Agentic AI Icon">
+                    </div>
+                    <h3 style="font-size: 1.8rem; color: #059669; margin-bottom: 15px;">Agentic AI</h3>
+                    <p style="font-size: 1.1rem; color: #e2e8f0; margin-bottom: 10px;">
+                        Helps operating the system, connectivity and support At <span class="highlight-green">1/4 the cost</span> of developed countries.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            ©2025 Otoz.ai INC. All rights reserved
+        </div>
+    </div>
+
+    <div class="slide-container" data-slide="7">
+        <div class="slide-header">
+            <div class="logo-section">
+                <img src="otoz logo.png" alt="Otoz.ai Logo">
+            </div>
+        </div>
+
+        <div class="slide-content">
+            <h2 style="color: #ffffff; margin-bottom: 20px; animation: fadeInScaleUp 0.8s ease-out; text-align: center; max-width: 900px;">
+                <span class="gradient-text">Bridging the Gap:</span> Fulfilling Unmet Needs
+            </h2>
+            <p style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 60px; text-align: center; max-width: 900px; animation: fadeInScaleUp 1s ease-out;">
+                We have discovered the white space to fulfill the unmet needs of buyers and sellers in the global used car market.
+            </p>
+
+            <div style="display: flex; justify-content: space-around; align-items: flex-start; width: 100%; max-width: 1200px; gap: 40px;">
+                <div style="flex: 1; text-align: center; animation: slideInFromLeft 1s ease-out;">
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 50%; width: 120px; height: 120px; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px; box-shadow: 0 0 20px rgba(255,255,255,0.2);">
+                        <img src="https://via.placeholder.com/80/8b5cf6/ffffff?text=🧑‍🤝‍🧑" alt="Buyer Icon">
+                    </div>
+                    <h3 style="font-size: 2rem; color: #8b5cf6; margin-bottom: 20px;">Buyer</h3>
+                    <div class="card" style="background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); padding: 25px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <p style="font-size: 1.1rem; color: #e2e8f0; margin-bottom: 10px;">
+                            The majority of buyers are from developing countries with a growing demand.
+                        </p>
+                        <p style="font-size: 1.2rem; color: #ffffff; font-weight: 700; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; margin-top: 15px;">
+                            Over <span class="highlight-purple">1.3 Million buyers</span> purchase Japanese cars annually.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; align-items: center; flex: 1.2; position: relative;">
+                    <img src="https://via.placeholder.com/400x150/0b1a29/22d3ee?text=Bridge+Icon" alt="Bridge connecting Buyer and Seller" style="width: 100%; max-width: 450px; margin-bottom: 30px; animation: popIn 1.2s ease-out;">
+                    
+                    <div class="card" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); padding: 25px 35px; animation: popIn 1.4s ease-out; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <h4 style="font-size: 1.8rem; color: #22d3ee; margin-bottom: 20px; text-align: center;">Unmet Needs</h4>
+                        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+                            <li style="font-size: 1.1rem; color: #e2e8f0; background: rgba(34,211,238,0.1); padding: 8px 15px; border-radius: 20px; text-align: center;">Efficient Processes</li>
+                            <li style="font-size: 1.1rem; color: #e2e8f0; background: rgba(34,211,238,0.1); padding: 8px 15px; border-radius: 20px; text-align: center;">Direct Transactions</li>
+                            <li style="font-size: 1.1rem; color: #e2e8f0; background: rgba(34,211,238,0.1); padding: 8px 15px; border-radius: 20px; text-align: center;">More Visibility</li>
+                            <li style="font-size: 1.1rem; color: #e2e8f0; background: rgba(34,211,238,0.1); padding: 8px 15px; border-radius: 20px; text-align: center;">Remote Assist</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="flex: 1; text-align: center; animation: slideInFromRight 1s ease-out;">
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 50%; width: 120px; height: 120px; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px; box-shadow: 0 0 20px rgba(255,255,255,0.2);">
+                        <img src="https://via.placeholder.com/80/059669/ffffff?text=👨‍💼" alt="Seller Icon">
+                    </div>
+                    <h3 style="font-size: 2rem; color: #059669; margin-bottom: 20px;">Seller</h3>
+                    <div class="card" style="background: rgba(5, 150, 105, 0.1); border-color: rgba(5, 150, 105, 0.3); padding: 25px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <p style="font-size: 1.1rem; color: #e2e8f0; margin-bottom: 10px;">
+                            The sellers are from developed countries experiencing surge in supply.
+                        </p>
+                        <p style="font-size: 1.2rem; color: #ffffff; font-weight: 700; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; margin-top: 15px;">
+                            There are <span class="highlight-green">130,000 used car dealers</span> in Japan selling cars.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            ©2025 Otoz.ai INC. All rights reserved
+        </div>
+    </div>
+
+    <div class="slide-container" data-slide="8">
+        <div class="slide-header">
+            <div class="logo-section">
+                <img src="otoz logo.png" alt="Otoz.ai Logo">
+            </div>
+        </div>
+        <div class="slide-content" style="padding-bottom: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div style="text-align: center; margin-bottom: 30px; width: 100%;">
+                <h1 style="font-size: 3rem; font-weight: 900; line-height: 1.1; margin-bottom: 15px; background: linear-gradient(135deg, #ffffff, #22d3ee, #667eea); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    Meet Your AI Specialists
+                </h1>
+                <p style="font-size: 1.1rem; color: #e2e8f0; line-height: 1.6; max-width: 800px; margin: 0 auto 15px;">
+                    Each agent is trained on millions of data points and works 24/7 to optimize your experience
+                </p>
+                <div style="background: linear-gradient(90deg, #667eea, #22d3ee); height: 3px; width: 100px; margin: 15px auto; border-radius: 2px;"></div>
+            </div>
+            
+            <div class="agents-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; max-width: 1200px; margin: 0 auto; width: 100%;">
+                <div class="interactive-agent-card" data-agent="sparky" data-powers='["🎯 Smart Analysis", "💬 AI Negotiation", "📊 Price Optimization", "⚡ Real-time Bidding"]'>
+                    <div class="shimmer-effect"></div>
+                    <div style="position: relative; margin-bottom: 15px;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 25px rgba(251, 191, 36, 0.5); position: relative; overflow: hidden;">
+                            <div style="position: absolute; inset: 0; background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent); border-radius: 50%; animation: rotate 3s linear infinite;"></div>
+                            <span style="font-size: 2rem; position: relative; z-index: 2; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));">⚡</span>
+                        </div>
+                        <div style="position: absolute; top: -8px; right: -5px; background: linear-gradient(135deg, #22d3ee, #0891b2); color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; box-shadow: 0 3px 12px rgba(34, 211, 238, 0.4);">LVL 99</div>
+                    </div>
+                    <h3 style="font-size: 1.3rem; font-weight: 700; color: #ffffff; margin-bottom: 6px;">Sparky</h3>
+                    <p style="font-size: 0.85rem; color: #fbbf24; font-weight: 600; margin-bottom: 10px;">Discovery & Negotiation</p>
+                    <div style="background: rgba(251, 191, 36, 0.2); padding: 8px 12px; border-radius: 10px; margin-bottom: 10px;">
+                        <span style="font-size: 1rem; font-weight: 900; color: #fbbf24;">7.2%</span>
+                        <p style="font-size: 0.75rem; color: #94a3b8; margin: 0;">Avg. Discount</p>
+                    </div>
+                    <div class="click-instruction" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">
+                        <p style="font-size: 0.8rem; color: #e2e8f0;">Click to unleash powers!</p>
+                    </div>
+                </div>
+                <div class="interactive-agent-card" data-agent="inspector" data-powers='["🛠️ 127-Point Check", "📸 AI Photo Scan", "📋 Quality Reports", "✅ Compliance Check"]'>
+                    <div class="shimmer-effect"></div>
+                    <div style="position: relative; margin-bottom: 15px;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #06b6d4, #0891b2, #0e7490); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 25px rgba(6, 182, 212, 0.5); position: relative; overflow: hidden;">
+                            <div style="position: absolute; inset: 0; background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent); border-radius: 50%; animation: rotate 2s linear infinite reverse;"></div>
+                            <span style="font-size: 2rem; position: relative; z-index: 2; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));">🔍</span>
+                        </div>
+                        <div style="position: absolute; top: -8px; right: -5px; background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; box-shadow: 0 3px 12px rgba(251, 191, 36, 0.4);">LVL 95</div>
+                    </div>
+                    <h3 style="font-size: 1.3rem; font-weight: 700; color: #ffffff; margin-bottom: 6px;">Inspector</h3>
+                    <p style="font-size: 0.85rem; color: #06b6d4; font-weight: 600; margin-bottom: 10px;">Quality Assurance</p>
+                    <div style="background: rgba(6, 182, 212, 0.2); padding: 8px 12px; border-radius: 10px; margin-bottom: 10px;">
+                        <span style="font-size: 1rem; font-weight: 900; color: #06b6d4;">127</span>
+                        <p style="font-size: 0.75rem; color: #94a3b8; margin: 0;">Point Check</p>
+                    </div>
+                    <div class="click-instruction" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">
+                        <p style="font-size: 0.8rem; color: #e2e8f0;">Click to activate toolkit!</p>
+                    </div>
+                </div>
+                <div class="interactive-agent-card" data-agent="penny" data-powers='["💳 Multi-Currency", "🔒 Secure Payments", "📊 Financial Analysis", "⚡ Instant Settlement"]'>
+                    <div class="shimmer-effect"></div>
+                    <div style="position: relative; margin-bottom: 15px;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5cf6, #7c3aed, #6d28d9); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 25px rgba(139, 92, 246, 0.5); position: relative; overflow: hidden;">
+                            <div style="position: absolute; inset: 0; background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent); border-radius: 50%; animation: rotate 4s linear infinite;"></div>
+                            <span style="font-size: 2rem; position: relative; z-index: 2; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));">💎</span>
+                        </div>
+                        <div style="position: absolute; top: -8px; right: -5px; background: linear-gradient(135deg, #059669, #047857); color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; box-shadow: 0 3px 12px rgba(5, 150, 105, 0.4);">LVL 98</div>
+                    </div>
+                    <h3 style="font-size: 1.3rem; font-weight: 700; color: #ffffff; margin-bottom: 6px;">Penny</h3>
+                    <p style="font-size: 0.85rem; color: #8b5cf6; font-weight: 600; margin-bottom: 10px;">Financial Wizard</p>
+                    <div style="background: rgba(139, 92, 246, 0.2); padding: 8px 12px; border-radius: 10px; margin-bottom: 10px;">
+                        <span style="font-size: 1rem; font-weight: 900; color: #8b5cf6;">40+</span>
+                        <p style="font-size: 0.75rem; color: #94a3b8; margin: 0;">Currencies</p>
+                    </div>
+                    <div class="click-instruction" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">
+                        <p style="font-size: 0.8rem; color: #e2e8f0;">Click to witness magic!</p>
+                    </div>
+                </div>
+                <div class="interactive-agent-card" data-agent="captain" data-powers='["🚢 Global Shipping", "📍 Real-time Track", "⚓ Port Control", "📦 Smart Delivery"]'>
+                    <div class="shimmer-effect"></div>
+                    <div style="position: relative; margin-bottom: 15px;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #059669, #047857, #065f46); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 25px rgba(5, 150, 105, 0.5); position: relative; overflow: hidden;">
+                            <div style="position: absolute; inset: 0; background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent); border-radius: 50%; animation: rotate 5s linear infinite reverse;"></div>
+                            <span style="font-size: 2rem; position: relative; z-index: 2; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));">🌊</span>
+                        </div>
+                        <div style="position: absolute; top: -8px; right: -5px; background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; box-shadow: 0 3px 12px rgba(220, 38, 38, 0.4);">LVL 100</div>
+                    </div>
+                    <h3 style="font-size: 1.3rem; font-weight: 700; color: #ffffff; margin-bottom: 6px;">Captain</h3>
+                    <p style="font-size: 0.85rem; color: #059669; font-weight: 600; margin-bottom: 10px;">Logistics Commander</p>
+                    <div style="background: rgba(5, 150, 105, 0.2); padding: 8px 12px; border-radius: 10px; margin-bottom: 10px;">
+                        <span style="font-size: 1rem; font-weight: 900; color: #059669;">40+</span>
+                        <p style="font-size: 0.75rem; color: #94a3b8; margin: 0;">Ports</p>
+                    </div>
+                    <div class="click-instruction" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">
+                        <p style="font-size: 0.8rem; color: #e2e8f0;">Click to command fleet!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="power-display-area" style="margin-top: 40px; min-height: 300px; position: relative;">
+                <div class="powers-container" id="powersContainer" style="position: relative; width: 100%; height: 300px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px;">
+                    <p id="initial-click-instruction" style="color: #94a3b8; font-size: 1.1rem; text-align: center; width: 100%; opacity: 1; transition: opacity 0.5s;">
+                        💫 Click on any agent above to unleash their superpowers!
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            ©2025 Otoz.ai INC. All rights reserved
+        </div>
+    </div>
+
+    <div class="slide-container" data-slide="9">
+        <div class="slide-header">
+            <div class="logo-section">
+                <img src="otoz logo.png" alt="Otoz.ai Logo">
+            </div>
+        </div>
+
+        <div class="slide-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h2 style="color: #ffffff; margin-bottom: 50px; animation: fadeInScaleUp 0.8s ease-out; text-align: center; max-width: 900px;">
+                <span class="gradient-text">The Otoz.ai Ecosystem:</span> Seamless Global Trade
+            </h2>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 90%; max-width: 1400px; position: relative; gap: 40px;">
+                <div style="display: flex; flex-direction: column; align-items: center; flex: 1; text-align: center; animation: slideInFromLeft 1s ease-out;">
+                    <div style="background: linear-gradient(135deg, #059669, #047857); border-radius: 50%; width: 160px; height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 30px rgba(5, 150, 105, 0.4);">
+                        <img src="https://via.placeholder.com/80/0b1a29/ffffff?text=👨‍💻" alt="Seller Icon" style="filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));">
+                        <h4 style="font-size: 1.5rem; color: #ffffff; margin-top: 10px; margin-bottom: 0;">Seller</h4>
+                    </div>
+                    <p style="font-size: 1rem; color: #e2e8f0; margin-top: 15px;">(Dealer)</p>
+                    <div class="card" style="margin-top: 30px; padding: 20px; background: rgba(5, 150, 105, 0.1); border-color: rgba(5, 150, 105, 0.3);">
+                        <p style="font-size: 1rem; margin: 0; color: #e2e8f0;">Seller Page Access</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1.5; margin: 0 30px;">
+                    <div style="background: linear-gradient(135deg, #22d3ee, #667eea); padding: 25px 40px; border-radius: 20px; text-align: center; box-shadow: 0 0 40px rgba(34, 211, 238, 0.6); margin-bottom: 40px; animation: popIn 1.2s ease-out;">
+                        <img src="otoz logo.png" alt="Otoz.ai Logo" style="height: 60px; margin-bottom: 15px;">
+                        <h3 style="font-size: 1.8rem; color: #0b1a29; margin-bottom: 20px;">Platform Features</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                            <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; font-size: 0.9rem; color: #e2e8f0;">Task Force</div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; font-size: 0.9rem; color: #e2e8f0;">SMART Match</div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; font-size: 0.9rem; color: #e2e8f0;">Price Map</div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; font-size: 0.9rem; color: #e2e8f0;">Cross Review</div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; font-size: 0.9rem; color: #e2e8f0;">Yard Master</div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; font-size: 0.9rem; color: #e2e8f0;">Web Auction</div>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); border-radius: 50%; width: 140px; height: 140px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 30px rgba(139, 92, 246, 0.4); margin-top: 40px; animation: popIn 1.4s ease-out;">
+                        <img src="https://via.placeholder.com/70/0b1a29/ffffff?text=🤖" alt="Agentic AI Icon" style="filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));">
+                        <h4 style="font-size: 1.4rem; color: #ffffff; margin-top: 10px; margin-bottom: 0;">AGENTIC Ai</h4>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; align-items: center; flex: 1; text-align: center; animation: slideInFromRight 1s ease-out;">
+                    <div style="background: linear-gradient(135deg, #fbbf24, #f59e0b); border-radius: 50%; width: 160px; height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);">
+                        <img src="https://via.placeholder.com/80/0b1a29/ffffff?text=🧑‍🤝‍🧑" alt="Buyer Icon" style="filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));">
+                        <h4 style="font-size: 1.5rem; color: #ffffff; margin-top: 10px; margin-bottom: 0;">Buyer</h4>
+                    </div>
+                    <p style="font-size: 1rem; color: #e2e8f0; margin-top: 15px;">(Customer Company)</p>
+                    <div class="card" style="margin-top: 30px; padding: 20px; background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.3);">
+                        <p style="font-size: 1rem; margin: 0; color: #e2e8f0;">Buyer Page Access</p>
+                    </div>
+                </div>
+
+                <img src="https://via.placeholder.com/1000x400/0b1a29/22d3ee?text=Complex+Diagram+Lines+and+Flows" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: auto; opacity: 0.2; z-index: -1; pointer-events: none;" alt="Flow Lines Placeholder">
+            </div>
+            <p style="font-size: 0.9rem; color: #94a3b8; margin-top: 40px; text-align: center;">
+                *Note: For the actual pitch, the lines indicating data and payment flow would be dynamically animated or professionally designed as SVG.
+            </p>
+        </div>
+
+        <div class="slide-footer">
+            ©2025 Otoz.ai INC. All rights reserved
+        </div>
+    </div>
+
+    <div style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 100;">
+        <button id="prevSlide" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 1rem;">&#9664; Prev</button>
+        <button id="nextSlide" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 1rem;">Next &#9654;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const agentCards = document.querySelectorAll('.interactive-agent-card');
+            const powersContainer = document.getElementById('powersContainer');
+            const initialInstruction = document.getElementById('initial-click-instruction');
+
+            agentCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Remove initial instruction if present
+                    if (initialInstruction) {
+                        initialInstruction.style.animation = 'fadeOut 0.5s forwards';
+                        initialInstruction.addEventListener('animationend', () => {
+                            if (initialInstruction.parentNode) {
+                                initialInstruction.parentNode.removeChild(initialInstruction);
+                            }
+                        }, { once: true });
+                    }
+
+                    // Clear previous powers
+                    powersContainer.innerHTML = ''; 
+
+                    // Get powers from data-powers attribute
+                    const powers = JSON.parse(card.dataset.powers);
+                    
+                    // Create and append power elements with animation
+                    powers.forEach((power, index) => {
+                        const powerItem = document.createElement('div');
+                        powerItem.classList.add('power-item');
+                        powerItem.textContent = power;
+                        // Apply a staggered animation delay
+                        powerItem.style.animationDelay = `${0.1 * index}s`; 
+                        powersContainer.appendChild(powerItem);
+                    });
+
+                    // Optional: Highlight the clicked card
+                    agentCards.forEach(ac => ac.style.borderColor = 'rgba(255, 255, 255, 0.1)'); // Reset all
+                    card.style.borderColor = '#22d3ee'; // Highlight clicked one
+                });
+            });
+
+            // --- Basic Slide Navigation Logic ---
+            const slides = document.querySelectorAll('.slide-container');
+            let currentSlideIndex = 0;
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    if (i === index) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
+            }
+
+            // Initial display
+            showSlide(currentSlideIndex);
+
+            const prevButton = document.getElementById('prevSlide');
+            const nextButton = document.getElementById('nextSlide');
+
+            if (prevButton && nextButton) { // Check if buttons exist
+                prevButton.addEventListener('click', () => {
+                    currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+                    showSlide(currentSlideIndex);
+                });
+
+                nextButton.addEventListener('click', () => {
+                    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                    showSlide(currentSlideIndex);
+                });
+
+                // Optional: Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowRight') {
+                        nextButton.click();
+                    } else if (e.key === 'ArrowLeft') {
+                        prevButton.click();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
