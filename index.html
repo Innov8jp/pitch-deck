@@ -69,7 +69,7 @@
             transform: translateX(-100%);
         }
 
-        /* Header Styles - Centralized Logo (consistent with original Slide 1) */
+        /* Header - Centralized Logo (consistent with original Slide 1) */
         .slide-header {
             display: flex;
             justify-content: flex-end; /* Align logo to the right */
@@ -144,6 +144,7 @@
             -webkit-text-fill-color: transparent;
             display: inline-block; /* Ensure gradient applies correctly */
         }
+
         .highlight-yellow { color: #fbbf24; font-weight: 700; }
         .highlight-aqua { color: #22d3ee; font-weight: 700; }
         .highlight-green { color: #059669; font-weight: 700; }
@@ -537,7 +538,7 @@
                                 <p style="font-size: 0.95rem; color: #e2e8f0;">Click to unleash powers!</p>
                             </div>
                             
-                            <div class="power-orbs-container" data-agent="sparky" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; pointer-events: none; z-index: 10;">
+                            <div class="power-orbs-container" data-agent="sparky">
                                 <div class="power-orb holo-card" data-position="0" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
                                     🎯 Smart Analysis<div class="scan-line"></div>
                                 </div>
@@ -572,7 +573,7 @@
                                 <p style="font-size: 0.95rem; color: #e2e8f0;">Click to activate my toolkit!</p>
                             </div>
                             
-                            <div class="power-orbs-container" data-agent="inspector" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; pointer-events: none; z-index: 10;">
+                            <div class="power-orbs-container" data-agent="inspector">
                                 <div class="power-orb holo-card" data-position="0" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
                                     🛠️ 127-Point Check<div class="scan-line"></div>
                                 </div>
@@ -607,7 +608,7 @@
                                 <p style="font-size: 0.95rem; color: #e2e8f0;">Click to witness my magic!</p>
                             </div>
                             
-                            <div class="power-orbs-container" data-agent="penny" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; pointer-events: none; z-index: 10;">
+                            <div class="power-orbs-container" data-agent="penny">
                                 <div class="power-orb holo-card" data-position="0" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
                                     💳 Multi-Currency<div class="scan-line"></div>
                                 </div>
@@ -630,133 +631,4 @@
                                     <div style="position: absolute; inset: 0; background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent); border-radius: 50%; animation: rotate 5s linear infinite reverse;"></div>
                                     <span style="font-size: 3rem; position: relative; z-index: 2; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));">🌊</span>
                                 </div>
-                                <div style="position: absolute; top: -10px; right: 10px; background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: 700; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);">LVL 100</div>
-                            </div>
-                            <h3 style="font-size: 1.8rem; font-weight: 700; color: #ffffff; margin-bottom: 8px;">Captain</h3>
-                            <p style="font-size: 1.1rem; color: #059669; font-weight: 600; margin-bottom: 15px;">Global Logistics Commander</p>
-                            <div style="background: rgba(5, 150, 105, 0.2); padding: 12px 20px; border-radius: 15px; margin-bottom: 15px;">
-                                <span style="font-size: 1.4rem; font-weight: 900; color: #059669;">40+</span>
-                                <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">Ports Worldwide</p>
-                            </div>
-                            <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px;">
-                                <p style="font-size: 0.95rem; color: #e2e8f0;">Click to command my fleet!</p>
-                            </div>
-                            
-                            <div class="power-orbs-container" data-agent="captain" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; pointer-events: none; z-index: 10;">
-                                <div class="power-orb holo-card" data-position="0" style="background: linear-gradient(135deg, #059669, #047857);">
-                                    🚢 Global Shipping<div class="scan-line"></div>
-                                </div>
-                                <div class="power-orb holo-card" data-position="1" style="background: linear-gradient(135deg, #059669, #047857);">
-                                    📍 Real-time Track<div class="scan-line"></div>
-                                </div>
-                                <div class="power-orb holo-card" data-position="2" style="background: linear-gradient(135deg, #059669, #047857);">
-                                    ⚓ Port Control<div class="scan-line"></div>
-                                </div>
-                                <div class="power-orb holo-card" data-position="3" style="background: linear-gradient(135deg, #059669, #047857);">
-                                    📦 Smart Delivery<div class="scan-line"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 40px;">
-                        <p style="color: #94a3b8; font-size: 1.1rem; animation: pulse 2s infinite;">
-                            💫 Click on any agent to reveal their superpowers
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide" data-slide="3">
-                <div class="slide-header">
-                    <div class="slide-number">03 / 9</div>
-                    <div class="logo-section">
-                        <img src="otoz logo.png" alt="Otoz.ai Logo">
-                    </div>
-                </div>
-                <div class="slide-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 100px;">
-                    <h2 style="color: #ffffff; margin-bottom: 50px; animation: fadeInScaleUp 0.8s ease-out; text-align: center; max-width: 900px;">
-                        <span class="gradient-text">Global Used Car</span> Market Insights
-                    </h2>
-
-                    <div style="display: flex; gap: 60px; width: 100%; max-width: 1200px; justify-content: center;">
-                        <div style="flex: 1; animation: slideInFromLeft 0.8s ease-out; text-align: center;">
-                            <div class="card" style="padding: 30px; margin-bottom: 30px;">
-                                <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: #22d3ee; text-align: center;">Top Global Exporters (2022)</h3>
-                                <ul style="list-style: none; padding: 0; margin: 0; text-align: left; max-width: 300px; margin: 0 auto;">
-                                    <li style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 10px;"><span class="highlight-yellow">1. Japan</span></li>
-                                    <li style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 10px;">2. United States</li>
-                                    <li style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 10px;">3. Germany</li>
-                                    <li style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 10px;">4. United Kingdom</li>
-                                    <li style="font-size: 1.2rem; color: #e2e8f0;">5. Canada</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div style="flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; animation: slideInFromRight 0.8s ease-out;">
-                            <div style="width: 220px; height: 220px; background: linear-gradient(135deg, #8b5cf6, #667eea); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 40px rgba(139, 92, 246, 0.6); margin-bottom: 40px; animation: popIn 1s ease-out;">
-                                <p style="font-size: 1.5rem; color: #e2e8f0; margin-bottom: 5px;">Global Market</p>
-                                <span style="font-size: 4rem; font-weight: 900; color: #ffffff;">$2T</span>
-                            </div>
-
-                            <div class="card" style="padding: 25px 30px; max-width: 500px; animation: popIn 1.4s ease-out;">
-                                <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: #fbbf24;">Top 5 Export Destinations from Japan [2024]:</h3>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                                    <p style="font-size: 1.1rem; margin: 0; text-align: left;"><span class="highlight-aqua">1. UAE:</span> 226,762 units</p>
-                                    <p style="font-size: 1.1rem; margin: 0; text-align: left;"><span class="highlight-aqua">2. RUSSIA:</span> 199,098 units</p>
-                                    <p style="font-size: 1.1rem; margin: 0; text-align: left;"><span class="highlight-aqua">3. MONGOLIA:</span> 111,661 units</p>
-                                    <p style="font-size: 1.1rem; margin: 0; text-align: left;"><span class="highlight-aqua">4. NEW ZEALAND:</span> 71,667 units</p>
-                                    <p style="font-size: 1.1rem; margin: 0; text-align: left;"><span class="highlight-aqua">5. TANZANIA:</span> 77,992 units</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide" data-slide="4">
-                <div class="slide-header">
-                    <div class="slide-number">04 / 9</div>
-                    <div class="logo-section">
-                        <img src="otoz logo.png" alt="Otoz.ai Logo">
-                    </div>
-                </div>
-
-                <div class="slide-content" style="display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 50px;">
-                    <h2 style="color: #ffffff; margin-bottom: 50px; animation: fadeInScaleUp 0.8s ease-out;">
-                        <span class="gradient-text">How People Import Cars Today:</span> A Complex Journey
-                    </h2>
-
-                    <div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; width: 90%; max-width: 1400px; margin-bottom: 40px;">
-                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1; animation: popIn 0.8s ease-out;">
-                            <div style="background: rgba(255,255,255,0.1); border-radius: 50%; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-                                <img src="https://via.placeholder.com/60/059669/ffffff?text=👨‍💻" alt="Seller Icon" style="filter: drop-shadow(0 0 5px rgba(5,150,105,0.5));">
-                            </div>
-                            <h4 style="font-size: 1.4rem; color: #059669; margin-bottom: 5px;">Seller</h4>
-                            <p style="font-size: 0.95rem; color: #e2e8f0; margin: 0;">UC dealer (Japan)</p>
-                        </div>
-                        
-                        <div style="display: flex; align-items: center; justify-content: center; flex-basis: 50px;">
-                            <span style="font-size: 2.5rem; color: #22d3ee; animation: pulse 2s infinite;">→</span>
-                        </div>
-
-                        <div style="display: flex; flex-direction: column; align-items: center; flex: 3; animation: popIn 1s ease-out;">
-                            <div style="display: flex; justify-content: space-around; width: 100%; margin-bottom: 15px;">
-                                <div style="text-align: center; flex: 1;">
-                                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-                                        <p style="font-size: 0.9rem; color: #22d3ee; margin: 0;">05</p>
-                                        <span style="font-size: 2rem;">👤</span>
-                                    </div>
-                                    <p style="font-size: 0.9rem;">Auction<br/>agent</p>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: center; flex-basis: 30px;"><span style="font-size: 2rem; color: #22d3ee;">→</span></div>
-                                <div style="text-align: center; flex: 1;">
-                                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-                                        <p style="font-size: 0.9rem; color: #22d3ee; margin: 0;">04</p>
-                                        <span style="font-size: 2rem;">🚚</span>
-                                    </div>
-                                    <p style="font-size: 0.9rem;">Inland<br/>transporter</p>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: center; flex-basis: 30px;"><span style="font-size: 2rem; color: #22d3ee;">→</span></div>
-                                <div style="text-align: center; flex: 1;">
-                                    <div style="background: rgba(255,2
+                                <div style="position: absolute; top: -10px; right: 10px; background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: 700; box-shadow: 0 4px 15px rgba(22
