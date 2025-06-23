@@ -1,0 +1,572 @@
+Got it\! Excellent point. I will absolutely make sure to clearly label each slide's code block with its number, like "Slide 1," "Slide 2," and so on. This will indeed make merging and locating much easier.
+
+Let's proceed with **Slide 1**.
+
+Here is the refined code for **Slide 1**, ready for your review:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otoz.ai - AI-Powered Car Revolution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f172a;
+            color: white;
+            /* Ensures no scroll on body */
+            overflow: hidden; 
+            height: 100vh;
+            width: 100vw;
+            display: flex; /* Use flexbox for body to center presentation if needed */
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Presentation Container - now directly the single slide view */
+        .presentation {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Important for single-screen view */
+            display: flex; /* Flex container for the slide itself */
+            flex-direction: column;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        }
+
+        /* Slide Styling - now just for the active slide, no transform needed for single view */
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 4vh 5vw; /* Responsive padding */
+            overflow: hidden; /* Prevents internal scroll on the slide */
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+        }
+
+        /* Header Styles */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4vh; /* Responsive margin */
+            width: 100%; /* Ensure header spans full width */
+            flex-shrink: 0; /* Prevent header from shrinking */
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5vw; /* Responsive gap */
+        }
+
+        .logo {
+            width: clamp(30px, 5vw, 50px); /* Responsive sizing */
+            height: clamp(30px, 5vw, 50px);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(16px, 2.5vw, 20px);
+            font-weight: bold;
+        }
+
+        .company-name {
+            font-size: clamp(20px, 3.5vw, 28px);
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .slide-number {
+            background: rgba(255, 255, 255, 0.1);
+            padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2.5vw, 16px);
+            border-radius: 20px;
+            font-size: clamp(10px, 1.5vw, 12px);
+            font-weight: 600;
+        }
+
+        /* Content Styles */
+        .slide-content {
+            flex: 1; /* Allows content to take available space */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            height: 100%; /* Ensure content takes full height within its flex container */
+            overflow: hidden; /* Prevents main content area from scrolling */
+        }
+
+        .title-section {
+            margin-bottom: 6vh; /* Responsive margin */
+            max-width: 90vw; /* Limit width */
+            width: 100%;
+            position: relative; /* For the subtle background glows */
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 6vw, 4rem); /* Responsive font size */
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 2vh; /* Responsive margin */
+            background: linear-gradient(135deg, #ffffff, #22d3ee, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 15px rgba(34, 211, 238, 0.5); /* Subtle glow */
+        }
+
+        .main-title .gradient-text {
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .intro-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: clamp(25px, 4vw, 40px);
+            margin: 3vh auto; /* Responsive margin */
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 2vh; /* Responsive gap for internal elements */
+            justify-content: center; /* Center internal content */
+            align-items: center;
+            flex-shrink: 0; /* Prevent card from shrinking too much */
+        }
+
+        /* Removed floating orbs for cleaner, single-screen focus */
+
+        .intro-text {
+            font-size: clamp(1rem, 2vw, 1.4rem); /* Responsive font size */
+            color: #e2e8f0;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adaptive columns */
+            gap: 20px; /* Responsive gap */
+            width: 100%; /* Ensure grid spans full width of its parent */
+            max-width: 700px; /* Limit max width of the grid */
+        }
+
+        .feature-item {
+            background: rgba(34, 211, 238, 0.15); /* Base color */
+            padding: clamp(15px, 3vw, 20px);
+            border-radius: 15px;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 120px; /* Ensure consistent height */
+        }
+        /* Specific colors for feature items based on original code */
+        .feature-item:nth-child(1) {
+            background: rgba(34, 211, 238, 0.15); border-color: rgba(34, 211, 238, 0.3);
+        }
+        .feature-item:nth-child(1) h4 { color: #22d3ee; }
+        .feature-item:nth-child(2) {
+            background: rgba(102, 126, 234, 0.15); border-color: rgba(102, 126, 234, 0.3);
+        }
+        .feature-item:nth-child(2) h4 { color: #667eea; }
+        .feature-item:nth-child(3) {
+            background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3);
+        }
+        .feature-item:nth-child(3) h4 { color: #fbbf24; }
+
+
+        .feature-icon {
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
+            margin-bottom: 1vh;
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 1.8vw, 1.1rem);
+            margin-bottom: 0.5vh;
+            font-weight: 700;
+        }
+
+        .feature-description {
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            color: #94a3b8;
+        }
+
+        /* Founder Card Section */
+        .founder-section {
+            display: flex;
+            gap: 4vw; /* Responsive gap */
+            margin-top: 6vh; /* Responsive margin */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-content: center; /* Center items when wrapped */
+            width: 100%;
+            align-items: center;
+            flex-shrink: 0; /* Prevent from shrinking too much */
+        }
+
+        .founder-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: clamp(30px, 5vw, 40px) clamp(40px, 7vw, 60px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            flex: 1 1 350px; /* Allow card to grow/shrink but maintain min width */
+            max-width: 500px;
+        }
+
+        .founder-avatar-container {
+            width: clamp(90px, 12vw, 120px);
+            height: clamp(90px, 12vw, 120px);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 3vh; /* Responsive margin */
+            box-shadow: 0 0 40px rgba(102, 126, 234, 0.4);
+            position: relative;
+        }
+
+        .founder-avatar-icon {
+            font-size: clamp(2.5rem, 5vw, 3rem);
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        }
+
+        .founder-avatar-ring {
+            position: absolute;
+            width: calc(100% + 20px); /* Slightly larger than avatar */
+            height: calc(100% + 20px);
+            border: 3px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            border-top-color: #22d3ee;
+            animation: rotate 3s linear infinite;
+        }
+
+        .founder-details {
+            background: rgba(0,0,0,0.3);
+            padding: clamp(15px, 3vw, 20px);
+            border-radius: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .founder-name {
+            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5vh;
+        }
+
+        .founder-role {
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            color: #22d3ee;
+            font-weight: 600;
+            margin-bottom: 1vh;
+        }
+
+        .founder-divider {
+            width: clamp(40px, 8vw, 60px);
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #22d3ee);
+            margin: 2vh auto;
+            border-radius: 1px;
+        }
+
+        .founder-bio {
+            font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        /* Stats Grid for Founder's Achievements */
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adaptive columns */
+            gap: 20px; /* Responsive gap */
+            flex: 1; /* Allow to take available space */
+            max-width: 450px; /* Limit width */
+            align-items: center; /* Vertically align items in the grid */
+            justify-content: center; /* Center horizontally */
+        }
+
+        .achievement-item {
+            background: rgba(34, 211, 238, 0.1); /* Base color */
+            padding: clamp(20px, 3vw, 25px);
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+        }
+        /* Specific colors for achievement items based on original code */
+        .achievement-item:nth-child(1) {
+            background: rgba(34, 211, 238, 0.1); border-color: rgba(34, 211, 238, 0.3);
+        }
+        .achievement-item:nth-child(1) .achievement-number { color: #22d3ee; }
+        .achievement-item:nth-child(2) {
+            background: rgba(102, 126, 234, 0.1); border-color: rgba(102, 126, 234, 0.3);
+        }
+        .achievement-item:nth-child(2) .achievement-number { color: #667eea; }
+        .achievement-item:nth-child(3) {
+            background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3);
+        }
+        .achievement-item:nth-child(3) .achievement-number { color: #fbbf24; }
+
+
+        .achievement-number {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 900;
+            margin-bottom: 0.5vh;
+        }
+
+        .achievement-label {
+            font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Utility classes (from your original code, kept for consistency if used elsewhere) */
+        .stat-grid, .stat-item, .agent-showcase, .agent-card, .cta-section, .primary-btn, .secondary-btn, .navigation, .nav-btn, .progress-bar, .progress-fill, .slide-counter, .fullscreen-btn, .touch-indicator, .power-orbs-container, .power-orb, .holographic-background, .holo-grid, [class^="scan-line-"], .card-scan-line, [class^="heartbeat-ring-"], .heartbeat-pulse, .strong-heartbeat-pulse, .services-landing-zone, .services-landing-zone h3, .floating-ai-service, .landed-service-card, .bottom-panel, .panel-header, .panel-title, .close-panel, .panel-content {
+            /* These styles are kept as-is or for reference, but their direct application on this slide is minimal */
+        }
+        /* Keyboard Focus Indicators - essential for accessibility */
+        .nav-btn:focus,
+        .fullscreen-btn:focus,
+        .interactive-agent-card:focus,
+        .global-market-circle:focus,
+        .flow-bubble:focus,
+        .why-diamond:focus,
+        .exporter-item:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+
+        /* Animations (from your original code) */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        /* ... (rest of your animations - kept as is, but only 'rotate' and 'fadeInUp' are actively used here) ... */
+
+        /* Responsive Design Adjustments */
+        @media (max-width: 1024px) {
+            .founder-section {
+                flex-direction: column; /* Stack items vertically */
+                align-items: center; /* Center them */
+            }
+            .founder-card, .achievement-grid {
+                max-width: 90%; /* Occupy more width on smaller screens */
+            }
+            .achievement-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 3vh 3vw;
+            }
+            .slide-header {
+                flex-direction: column;
+                gap: 1.5vh;
+            }
+            .slide-number {
+                margin-top: 1vh;
+            }
+            .logo-section {
+                gap: 10px;
+            }
+            .logo {
+                width: clamp(25px, 6vw, 40px);
+                height: clamp(25px, 6vw, 40px);
+            }
+            .company-name {
+                font-size: clamp(18px, 4.5vw, 24px);
+            }
+            .main-title {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+            .intro-text {
+                font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            }
+            .feature-grid {
+                grid-template-columns: 1fr; /* Stack features on very small screens */
+                gap: 15px;
+            }
+            .founder-card, .achievement-grid {
+                padding: clamp(20px, 5vw, 30px);
+                flex: 1 1 95%; /* Allow full width on small screens */
+            }
+            .achievement-grid {
+                 grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                 gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 2vh 2vw;
+            }
+            .main-title {
+                font-size: clamp(1.8rem, 9vw, 2.5rem);
+            }
+            .intro-card {
+                padding: clamp(15px, 4vw, 25px);
+            }
+            .intro-text {
+                font-size: clamp(0.85rem, 3vw, 1rem);
+            }
+            .feature-icon {
+                font-size: clamp(1.2rem, 4vw, 1.5rem);
+            }
+            .feature-title {
+                font-size: clamp(0.9rem, 2.5vw, 1rem);
+            }
+            .founder-name {
+                font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+            }
+            .founder-role {
+                font-size: clamp(0.8rem, 2.5vw, 1rem);
+            }
+            .achievement-number {
+                font-size: clamp(1.8rem, 5vw, 2.2rem);
+            }
+        }
+
+        /* Hidden navigation/progress for single-slide view */
+        .navigation, .progress-bar, .slide-counter, .fullscreen-btn, .touch-indicator, .bottom-panel {
+            display: none !important; /* Hide these completely for individual slide design */
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation" id="presentation">
+        <div class="slide" data-slide="1">
+            <div class="slide-header">
+                <div class="logo-section">
+                    <div class="logo">🌍</div>
+                    <div class="company-name">otoz.ai</div>
+                </div>
+                <div class="slide-number">01 / 10</div>
+            </div>
+            <div class="slide-content">
+                <div class="title-section">
+                    <h1 class="main-title">
+                        The World's First<br/>
+                        <span class="gradient-text">Cross Border</span><br/>
+                        AI-Powered Car Concierge
+                    </h1>
+                </div>
+                
+                <div class="intro-card">
+                    <p class="intro-text">
+                        Revolutionizing global car trade through intelligent AI agents that seamlessly connect buyers and sellers across continents
+                    </p>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon">🤖</div>
+                            <h4 class="feature-title">AI-Powered</h4>
+                            <p class="feature-description">Smart automation</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌐</div>
+                            <h4 class="feature-title">Cross Border</h4>
+                            <p class="feature-description">Global reach</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🚗</div>
+                            <h4 class="feature-title">Car Concierge</h4>
+                            <p class="feature-description">End-to-end service</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="founder-section">
+                    <div class="founder-card">
+                        <div class="founder-avatar-container">
+                            <span class="founder-avatar-icon">👨‍💼</span>
+                            <div class="founder-avatar-ring"></div>
+                        </div>
+                        
+                        <div class="founder-details">
+                            <h2 class="founder-name">Mirza Asif Baig</h2>
+                            <p class="founder-role">Founder & CEO</p>
+                            <div class="founder-divider"></div>
+                            <p class="founder-bio">Visionary leader transforming global automotive commerce</p>
+                        </div>
+                    </div>
+                    
+                    <div class="achievement-grid">
+                        <div class="achievement-item">
+                            <div class="achievement-number">$2.9M</div>
+                            <div class="achievement-label">Revenue Generated</div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-number">53</div>
+                            <div class="achievement-label">Cars Delivered</div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-number">98%</div>
+                            <div class="achievement-label">Customer Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+```
+
+Please review this **Slide 1** code. Once you're satisfied, we can move on to **Slide 2**. For the second slide, please provide the specific text content for the AI agents, their roles, and any "power" descriptions you envision for them.
